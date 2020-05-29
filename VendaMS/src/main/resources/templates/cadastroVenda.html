@@ -14,7 +14,7 @@
 <body>
 	<div class="topnav">
 		<div class="navbar">
-			<a href="#home">Home</a>
+			<a href="http://localhost:9097/venda">Home</a>
 			  
 			<div class="subnav">
 			 	<button class="subnavbtn">Funcionário <i class="fa fa-caret-down"></i></button>
@@ -115,7 +115,7 @@
 					<br/><br/>
 				</form>
 				
-				<form action="/venda/salvar" method="post" th:object="${venda}">
+				<form method="post" th:object="${venda}">
 				
 					<table class="table">
 						<thead>
@@ -134,7 +134,7 @@
 								<td style="text-align: right;" ><span th:text="'R$:'+${item.valorUnidade}" >Valor unidade</span></td>
 								<td style="text-align: right;" ><span th:text="'R$:'+${item.valorUnidade * item.quantidade}" >Total</span></td>
 								<td style="text-align: center;" th:if="${venda.id == null}" >
-									<button type="button" class="btn btn-danger" value="Remover" >Remove</button>
+									<a th:href="@{'/venda/removerItem/'+${item.produto.id}}">Remover</a>
 								</td>
 							</tr>
 							<tr>
@@ -142,14 +142,15 @@
 								<td style="text-align: right;" >
 									<span th:text="'R$:'+*{getValorTotal()}" ></span>
 								</td>
-								<td style="text-align: center;" > - - - </td>
+								<td th:if="${venda.id == null}" style="text-align: center;" > - - - </td>
 							</tr>
 						</tbody>
 					</table>
 					<br/><br/>
 					
-					<button th:if="${item != null}" type="submit" style="float: right; font-size: 14px;" 
-						class="btn btn-danger" value="Realizar Compra" >Realizar Compra</button>
+					<button th:if="${item != null}" type="submit" class="btn btn-danger" 
+						style="float: right; font-size: 14px;" value="Realizar Compra" 
+						formaction="/venda/salvar" >Realizar Compra</button>
 				</form>
 				
 			</div>

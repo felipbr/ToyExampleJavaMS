@@ -94,6 +94,11 @@ public class VendaController {
 	
 	@RequestMapping("/criar")
     public String criar(Model model) {
+		
+		if(funcionario == null) {
+			return "redirect:/venda/autenticacao";
+		}
+		
 		venda = new Venda();
 		venda.setFuncionario(funcionario);
 		
@@ -127,6 +132,8 @@ public class VendaController {
 			model.addAttribute("erro", "Cliente não cadastrado");
 			model.addAttribute("cliente", cli);
 		}
+		
+		model.addAttribute("venda", venda);
 		
 		return "cadastroVenda";
 	}
@@ -169,10 +176,26 @@ public class VendaController {
 		
 		model.addAttribute("venda", venda);	
     	model.addAttribute("produtos", produtos);
-    	
-    	
 		
 		return "cadastroVenda";
+	}
+	
+	@RequestMapping("/removerItem/{idProduto}")
+    public String removerItem(@PathVariable("idProduto") Long idProduto, Model model) {
+		
+		for(ItemVenda iv : venda.getListaItens()) {
+			if(idProduto.equals(iv.getIdProduto())) {
+				venda.getListaItens().remove(iv);
+				break;
+			}
+		}
+		
+		model.addAttribute("item", new ItemVenda());
+		
+		model.addAttribute("venda", venda);	
+    	model.addAttribute("produtos", produtos);
+    	
+    	return "cadastroVenda";
 	}
 	
 	@PostMapping("/salvar")
