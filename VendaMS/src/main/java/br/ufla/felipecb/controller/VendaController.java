@@ -100,6 +100,7 @@ public class VendaController {
 		}
 		
 		venda = new Venda();
+		venda.setIdFuncionario(funcionario.getId());
 		venda.setFuncionario(funcionario);
 		
     	model.addAttribute("venda", venda);
