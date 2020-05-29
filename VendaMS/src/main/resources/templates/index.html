@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>SR_M_MS</title>
+
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    
+</head>
+
+<body>
+	<div class="topnav">
+		<div class="navbar">
+			<a href="#home">Home</a>
+			  
+			<div class="subnav">
+			 	<button class="subnavbtn">Funcionário <i class="fa fa-caret-down"></i></button>
+				<div class="subnav-content">
+					<a href="http://localhost:9093/funcionario/criar">Criar</a>
+					<a href="http://localhost:9093/funcionario/listar">Listar</a>
+				</div>
+			</div> 
+			  
+			<div class="subnav">
+				<button class="subnavbtn">Cliente <i class="fa fa-caret-down"></i></button>
+				<div class="subnav-content">
+					<a href="http://localhost:9091/cliente/criar">Criar</a>
+					<a href="http://localhost:9091/cliente/listar">Listar</a>
+				</div>
+			</div>
+			  
+			<div class="subnav">
+				<button class="subnavbtn">Produto <i class="fa fa-caret-down"></i></button>
+				<div class="subnav-content">
+					<a href="http://localhost:9092/produto/criar">Criar</a>
+					<a href="http://localhost:9092/produto/listar">Listar</a>
+				</div>
+			</div> 
+			
+			<div class="subnav">
+				<button class="subnavbtn">Venda <i class="fa fa-caret-down"></i></button>
+				<div class="subnav-content">
+					<a href="http://localhost:9097/venda/criar">Nova</a>
+					<a href="http://localhost:9097/venda/listar">Realizadas</a>
+				</div>
+			</div> 
+			
+			<a href="http://localhost:9097/venda/desconectar">Desconectar</a>
+		</div>
+	</div>
+	
+	<div class="starter-template" >
+		<div class="align-left-template">
+			<h1><span>Página inicial</span></h1>
+			<div th:if="${erro != null}">
+				<span th:text="${erro}" style="color: red" ></span>
+			</div>
+			<div th:if="${mensagem != null}">
+				<span th:text="${mensagem}" style="color: blue" ></span>
+			</div>
+			<br/>
+			
+		</div>
+	</div>
+</body>
+</html>

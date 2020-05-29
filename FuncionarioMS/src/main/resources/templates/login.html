@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>MS</title>
+
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body>
+	<div class="starter-template" >
+    	<div class="align-left-template" >
+			<form action="/autenticacao/conectar" method="post">
+				<div class="loginmodal-container">
+					<h1>Login</h1>
+		
+					<div th:if="${mensagem != null}">
+						<span th:text="${mensagem}" style="color: red" ></span>
+					</div>
+					
+					<input type="text" id="login" name="login" th:value="${login}" class="form-control" />
+					<br/>
+					
+					<input type="password" id="senha" name="senha" th:value="${senha}" class="form-control" />
+					<br />
+					
+					<button type="submit">Login</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>SR_M_MS</title>
+
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+</head>
+
+<body>
+	<div class="topnav">
+		<div class="navbar">
+			<a href="#home">Home</a>
+			  
+			<div class="subnav">
+			 	<button class="subnavbtn">Funcionário <i class="fa fa-caret-down"></i></button>
+				<div class="subnav-content">
+					<a href="http://localhost:9093/funcionario/criar">Criar</a>
+					<a href="http://localhost:9093/funcionario/listar">Listar</a>
+				</div>
+			</div> 
+			  
+			<div class="subnav">
+				<button class="subnavbtn">Cliente <i class="fa fa-caret-down"></i></button>
+				<div class="subnav-content">
+					<a href="http://localhost:9091/cliente/criar">Criar</a>
+					<a href="http://localhost:9091/cliente/listar">Listar</a>
+				</div>
+			</div>
+			  
+			<div class="subnav">
+				<button class="subnavbtn">Produto <i class="fa fa-caret-down"></i></button>
+				<div class="subnav-content">
+					<a href="http://localhost:9092/produto/criar">Criar</a>
+					<a href="http://localhost:9092/produto/listar">Listar</a>
+				</div>
+			</div> 
+			
+			<div class="subnav">
+				<button class="subnavbtn">Venda <i class="fa fa-caret-down"></i></button>
+				<div class="subnav-content">
+					<a href="http://localhost:9097/venda/criar">Nova</a>
+					<a href="http://localhost:9097/venda/listar">Realizadas</a>
+				</div>
+			</div> 
+		</div>
+	</div>
+	
+	
+	<div class="starter-template" >
+    	<div class="align-left-template" >
+    	
+    		<div th:if="${erro != null}">
+				<span th:text="${erro}" style="color: red" ></span>
+			</div>
+			<div th:if="${mensagem != null}">
+				<span th:text="${mensagem}" style="color: blue" ></span>
+			</div>
+
+			<h1>Venda</h1>	
+					
+			<div th:if="${venda.funcionario != null}" >
+				<hr/>
+				<span th:text="'Funcionário: ' + ${venda.funcionario.id} 
+					+ ' - ' + ${venda.funcionario.nome}" ></span>
+				<br/><hr/>
+			</div>
+			
+			<div th:if="${venda.cliente != null}" >
+				<span>Nome do comprador:</span> <span th:text="${venda.cliente.nome}" ></span>
+				<br/><br/>
+				
+				<span>CPF do comprador:</span> <span th:text="${venda.cliente.cpf}" ></span>
+				<br/>
+			</div>
+			
+			<form th:if="${cliente != null}" action="/venda/carregarVenda" th:object="${cliente}"
+				method="post" style="width: 500px !important;" >
+				<div>
+					<span>CPF do comprador:</span>
+					<br/>
+					<input name="cpf" th:field="*{cpf}" />
+					<br/><br/>
+				
+					<button style="float: right; font-size: 14px;" type="submit">Buscar cliente</button>
+				</div>
+				<br/>
+			</form>
+			<hr/>
+			
+			<div th:if="${venda != null  &amp;&amp; venda.idCliente != null}"  >
+				
+				<form th:if="${item != null}" method="post" th:object="${item}" 
+					style="width: 500px !important;" >
+					
+					<span>Produto:</span>
+					<br/>
+					<select id="produto" th:field="*{idProduto}">
+					    <option value="">Produto</option>
+					    <option th:each="prod : ${produtos}" th:value="${prod.id}" 
+					    	th:text="${prod.nome}+' - Preço R$: ' + ${prod.valor} + ' - Estoque: ' + ${prod.quantidade}" selected="selected"></option>
+				    </select>
+					<br/><br/>
+					
+					<span>Quantidade: </span>
+					
+					<input name="quantidade" th:field="*{quantidade}" type="number" style="width: 50px;" />
+					
+					<button style="float: right; font-size: 14px;" 
+						formaction="/venda/adicionarItem" type="submit" >Adicionar item</button>
+					<br/><br/>
+				</form>
+				
+				<form action="/venda/salvar" method="post" th:object="${venda}">
+				
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Produto</th>
+								<th>Quantidade</th>
+								<th>Valor unidade</th>
+								<th>Total</th>
+								<th th:if="${venda.id == null}" >Remove</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="item : *{listaItens}" >
+								<td><span th:text="${item.produto.nome}" >Produto</span></td>
+								<td style="text-align: right;" ><span th:text="${item.quantidade}" >Quantidade</span></td>
+								<td style="text-align: right;" ><span th:text="'R$:'+${item.valorUnidade}" >Valor unidade</span></td>
+								<td style="text-align: right;" ><span th:text="'R$:'+${item.valorUnidade * item.quantidade}" >Total</span></td>
+								<td style="text-align: center;" th:if="${venda.id == null}" >
+									<button type="button" class="btn btn-danger" value="Remover" >Remove</button>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="3">Valor total</td>
+								<td style="text-align: right;" >
+									<span th:text="'R$:'+*{getValorTotal()}" ></span>
+								</td>
+								<td style="text-align: center;" > - - - </td>
+							</tr>
+						</tbody>
+					</table>
+					<br/><br/>
+					
+					<button th:if="${item != null}" type="submit" style="float: right; font-size: 14px;" 
+						class="btn btn-danger" value="Realizar Compra" >Realizar Compra</button>
+				</form>
+				
+			</div>
+		</div>
+	</div>
+</body>
+</html>

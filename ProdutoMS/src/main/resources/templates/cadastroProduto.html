@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>SR_M_MS</title>
+
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+</head>
+
+<body>
+	<div class="topnav">
+		<div class="navbar">
+			<a href="#home">Home</a>
+			  
+			<div class="subnav">
+			 	<button class="subnavbtn">Funcionário <i class="fa fa-caret-down"></i></button>
+				<div class="subnav-content">
+					<a href="http://localhost:9093/funcionario/criar">Criar</a>
+					<a href="http://localhost:9093/funcionario/listar">Listar</a>
+				</div>
+			</div> 
+			  
+			<div class="subnav">
+				<button class="subnavbtn">Cliente <i class="fa fa-caret-down"></i></button>
+				<div class="subnav-content">
+					<a href="http://localhost:9091/cliente/criar">Criar</a>
+					<a href="http://localhost:9091/cliente/listar">Listar</a>
+				</div>
+			</div>
+			  
+			<div class="subnav">
+				<button class="subnavbtn">Produto <i class="fa fa-caret-down"></i></button>
+				<div class="subnav-content">
+					<a href="http://localhost:9092/produto/criar">Criar</a>
+					<a href="http://localhost:9092/produto/listar">Listar</a>
+				</div>
+			</div> 
+			
+			<div class="subnav">
+				<button class="subnavbtn">Venda <i class="fa fa-caret-down"></i></button>
+				<div class="subnav-content">
+					<a href="http://localhost:9097/venda/criar">Nova</a>
+					<a href="http://localhost:9097/venda/listar">Realizadas</a>
+				</div>
+			</div> 
+		</div>
+	</div>
+	
+	<div class="starter-template" >
+    	<div class="align-left-template" >
+			<form method="post" th:object="${produto}" style="width: 500px !important;" >
+	    		<div th:if="${mensagem != null}">
+					<div th:if="${erro}">
+						<span th:text="${mensagem}" style="color: red" ></span>
+					</div>
+					<div th:unless="${erro}">
+						<span th:text="${mensagem}" style="color: blue" ></span>
+					</div>
+				</div>
+
+				<h1>
+					<span th:if="${produto.id == null}">Cadastro de produto:</span>
+					<span th:if="${produto.id != null}">Edição de produto:</span>
+				</h1>
+				<input name="id" th:field="*{id}" type="hidden" />
+				<span>Nome:</span>
+				<br/>
+				<input name="nome" th:field="*{nome}" />
+				<br/><br/>
+				
+				<br th:if="${produto.id == null}" /><br th:if="${produto.id == null}" />
+				
+				<span>Descrição:</span>
+				<br/>
+				<input name="descricao" th:field="*{descricao}" />
+				<br/><br/>
+				
+				<span>Quantidade:</span>
+				<br/>
+				<input name="quantidade" th:field="*{quantidade}" type="number" />
+				<br/><br/>
+				
+				<span>Valor:</span>
+				<br/>
+				<input name="valor" th:field="*{valor}" type="number" />
+				<br/><br/>
+				
+				<button th:if="${produto.id == null}" style="float: right; font-size: 14px;" 
+					formaction="/produto/salvar" type="submit" >Criar produto</button>
+		        
+		        <button th:if="${produto.id != null}" style="float: right; font-size: 14px;" 
+		        	formaction="/produto/alterar" type="submit">Alterar produto</button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
