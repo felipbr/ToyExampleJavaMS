@@ -1,4 +1,4 @@
 # ToyExampleJavaMS
 Sistema de venda feito em microsserviço.
 
-Iniciar o Eureka Cliente e após os microsserviços.
+Iniciar o Eureka e após os microsserviços.
